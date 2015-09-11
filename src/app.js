@@ -24,14 +24,26 @@ climb.Wall = {
 
     view: function (ctrl) {
         "use strict";
-        return m('div', [
+        return m('div.climb__wall', [
             ctrl.feed().map(function (item) {
-                return m('div', item.message);
+                return m.component(climb.Tile, {item: item});
             })
         ]);
     }
 };
 
+climb.Tile = {
+
+    controller: function (args) {
+        return {item: args.item}
+    },
+
+    view: function (ctrl) {
+        "use strict";
+        return m('div.climb__tile', ctrl.item.message);
+    }
+};
+
 
 //initialize
-m.mount(document.getElementById("climb-wall"), climb.Wall);
+m.mount(document.body, climb.Wall);
