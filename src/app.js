@@ -3,7 +3,7 @@ var climb = {};
 climb.Collection = {
     feed() {
         "use strict";
-        const COLLECTION_ID = '55c1e00845284e26681c4929';
+        const COLLECTION_ID = '55a7d29945284ef60c0ce772';
 
         return m.request({
             dataType: "jsonp",
@@ -35,14 +35,33 @@ climb.Wall = {
 climb.Tile = {
 
     controller: function (args) {
+        "use strict";
         return {item: args.item}
     },
 
     view: function (ctrl) {
         "use strict";
         return m('div.climb__tile', {className: `climb__tile--${ctrl.item.source_type}`}, [
+
+            ctrl.item.image ? [
+                m('img', {src: ctrl.item.image.url, className: 'climb__tile__media'})
+            ] : null,
+
             m('div.climb__tile__message', m.trust(ctrl.item.message))
         ]);
+    }
+};
+
+climb.TileImage = {
+    controller: function (args) {
+        "use strict";
+        return {item: args.item}
+    },
+
+    view: function (ctrl) {
+        "use strict";
+
+        return m();
     }
 };
 
