@@ -1,3 +1,49 @@
-body {
-  background-color: red;
+.climb__wall {
+  display: block;
+  width: 100%;
+}
+
+.climb__tile {
+  float: left;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+@media (min-width: 24em) {
+  .climb__tile {
+    width: 100%;
+    padding-bottom: 100%;
+  }
+}
+
+@media (min-width: 48em) {
+  .climb__tile {
+    width: 50%;
+    padding-bottom: 50%;
+  }
+}
+
+@media (min-width: 65em) {
+  .climb__tile {
+    width: 33.333%;
+    padding-bottom: 33.333%;
+  }
+}
+
+@media (min-width: 90em) {
+  .climb__tile {
+    width: 25%;
+    padding-bottom: 25%;
+  }
+}
+
+.climb__tile__media {
+  width: 100%;
+  position: absolute;
+}
+
+.climb__tile__message {
+  position: absolute;
+  z-index: 1;
 }
