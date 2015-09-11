@@ -40,7 +40,9 @@ climb.Tile = {
 
     view: function (ctrl) {
         "use strict";
-        return m('div.climb__tile', m.trust(ctrl.item.message));
+        return m('div.climb__tile', {className: `climb__tile--${ctrl.item.source_type}`}, [
+            m('div.climb__tile__message', m.trust(ctrl.item.message))
+        ]);
     }
 };
 
