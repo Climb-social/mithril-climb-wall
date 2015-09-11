@@ -1,3 +1,6 @@
+require('./main.scss');
+const m = require('mithril');
+
 var climb = {};
 
 climb.Collection = {
