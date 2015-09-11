@@ -44,30 +44,20 @@ climb.Tile = {
 
     view: function (ctrl) {
         "use strict";
-        return m('div.climb__tile', {className: `climb__tile--${ctrl.item.source_type}`}, [
+        return m('div.climb__tile', {className: `climb__tile--${ctrl.item.source_type}`},
 
-            ctrl.item.image ? [
-                m('img', {src: ctrl.item.image.url, className: 'climb__tile__media'})
-            ] : null,
+            m('div.climb__tile__content', [
 
-            ctrl.item.message ? [
-                m('div.climb__tile__message', m.trust(ctrl.item.message))
-            ] : null
+                ctrl.item.image ? [
+                    m('img', {src: ctrl.item.image.url, className: 'climb__tile__media'})
+                ] : null,
 
-        ]);
-    }
-};
+                ctrl.item.message ? [
+                    m('div.climb__tile__message', m.trust(ctrl.item.message))
+                ] : null
 
-climb.TileImage = {
-    controller: function (args) {
-        "use strict";
-        return {item: args.item}
-    },
-
-    view: function (ctrl) {
-        "use strict";
-
-        return m();
+            ])
+        );
     }
 };
 

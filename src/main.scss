@@ -8,34 +8,33 @@
   position: relative;
   overflow: hidden;
   box-sizing: border-box;
-}
 
-@media (min-width: 24em) {
-  .climb__tile {
+  @media (min-width: 24em) {
     width: 100%;
     padding-bottom: 100%;
   }
-}
 
-@media (min-width: 48em) {
-  .climb__tile {
+  @media (min-width: 48em) {
     width: 50%;
     padding-bottom: 50%;
   }
-}
 
-@media (min-width: 65em) {
-  .climb__tile {
+  @media (min-width: 65em) {
     width: 33.333%;
     padding-bottom: 33.333%;
   }
-}
 
-@media (min-width: 90em) {
-  .climb__tile {
+  @media (min-width: 90em) {
     width: 25%;
     padding-bottom: 25%;
   }
+
+}
+
+.climb__tile__content {
+  margin: 0 1px 1px 0;
+  position: relative;
+  display: flex;
 }
 
 .climb__tile__media {
