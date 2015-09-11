@@ -47,7 +47,10 @@ climb.Tile = {
                 m('img', {src: ctrl.item.image.url, className: 'climb__tile__media'})
             ] : null,
 
-            m('div.climb__tile__message', m.trust(ctrl.item.message))
+            ctrl.item.message ? [
+                m('div.climb__tile__message', m.trust(ctrl.item.message))
+            ] : null
+
         ]);
     }
 };
