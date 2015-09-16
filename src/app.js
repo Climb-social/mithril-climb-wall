@@ -1,68 +1,80 @@
 require('./main.scss');
 const m = require('mithril');
 
-var climb = {};
+(function (m, document) {
 
-climb.Collection = {
-    feed() {
-        "use strict";
-        const COLLECTION_ID = '55a7d29945284ef60c0ce772';
+    let $targets = document.querySelectorAll('.climb-wall');
 
-        return m.request({
-            dataType: "jsonp",
-            url: `http://app.climb.social/api/v1/collections/${COLLECTION_ID}`
+    var climb = {};
+
+    climb.Collection = {
+        feed(climbId) {
+            "use strict";
+
+            return m.request({
+                dataType: "jsonp",
+                url: `http://app.climb.social/api/v1/collections/${climbId}`
+            });
+        }
+    };
+
+    climb.Wall = {
+
+        controller: function (climbId) {
+            var feed = climb.Collection.feed(climbId);
+            return {
+                feed
+            }
+
+        },
+
+        view: function (ctrl) {
+            "use strict";
+            return m('div.climb__wall', [
+                ctrl.feed().map(function (item) {
+                    return m.component(climb.Tile, {item: item});
+                })
+            ]);
+        }
+    };
+
+    climb.Tile = {
+
+        controller: function (args) {
+            "use strict";
+            return {item: args.item}
+        },
+
+        view: function (ctrl) {
+            "use strict";
+            return m('div.climb__tile', {className: `climb__tile--${ctrl.item.source_type}`},
+
+                [
+                    ctrl.item.image ? [
+                        m('img', {src: ctrl.item.image.url, className: 'climb__tile__media'})
+                    ] : null,
+
+                    m('div.climb__tile__content', [
+
+                        ctrl.item.message ? [
+                            m('div.climb__tile__message', m.trust(ctrl.item.message))
+                        ] : null
+
+                    ])
+                ]
+            );
+        }
+    };
+
+
+    for (let i = 0; i < $targets.length; ++i) {
+        let $item = $targets[i];
+        let climbId = $item.dataset.collectionId;
+        m.mount($targets[i], {
+            controller: climb.Wall.controller.bind(climb.Wall.controller, climbId),
+            view: climb.Wall.view
         });
     }
-};
-
-climb.Wall = {
-
-    controller: function () {
-        var feed = climb.Collection.feed();
-        return {
-            feed
-        }
-
-    },
-
-    view: function (ctrl) {
-        "use strict";
-        return m('div.climb__wall', [
-            ctrl.feed().map(function (item) {
-                return m.component(climb.Tile, {item: item});
-            })
-        ]);
-    }
-};
-
-climb.Tile = {
-
-    controller: function (args) {
-        "use strict";
-        return {item: args.item}
-    },
-
-    view: function (ctrl) {
-        "use strict";
-        return m('div.climb__tile', {className: `climb__tile--${ctrl.item.source_type}`},
-
-            [
-                ctrl.item.image ? [
-                    m('img', {src: ctrl.item.image.url, className: 'climb__tile__media'})
-                ] : null,
-
-                m('div.climb__tile__content', [
-
-                    ctrl.item.message ? [
-                        m('div.climb__tile__message', m.trust(ctrl.item.message))
-                    ] : null
-
-                ])
-            ]
-        );
-    }
-};
 
 
-//initialize
-m.mount(document.body, climb.Wall);
+})(m, document);
