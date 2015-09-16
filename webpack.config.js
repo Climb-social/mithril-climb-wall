@@ -1,25 +1,53 @@
-/**
- * Created by michele on 11/09/15.
- */
+var path = require('path');
+var webpack = require("webpack");
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
-var getConfig = require('hjs-webpack');
 
-var config = getConfig({
-    in: 'src/app.js',
-    out: 'dist',
-    clearBeforeBuild: true,
-    html: function (context) {
-        return {
-            'index.html': context.defaultTemplate({
-                html: `<script src="https://cdnjs.cloudflare.com/ajax/libs/mithril/0.2.0/mithril.min.js"></script>
-                       <div class="climb-wall" data-collection-id="55a7d29945284ef60c0ce772"></div>`
-            })
-        }
+module.exports = {
+
+    cache: true,
+
+    context: path.join(__dirname, 'src'),
+    entry: './app.js',
+    output: {
+        path: path.join(__dirname, 'dist'),
+        filename: 'bundle.js',
+        publicPath: '/',
+        chunkFilename: "modules/[chunkhash].js"
+    },
+
+    module: {
+        loaders: [{
+            test: /\.js$/,
+            loader: 'babel',
+            exclude: /node_modules/
+        }, {
+            test: /\.css$/,
+            loader: 'style!css!autoprefixer-loader?browsers=last 2 version',
+            exclude: /node_modules/
+        }, {
+            test: /\.scss/,
+            loader: 'style!css!autoprefixer-loader?browsers=last 2 version!sass',
+            exclude: /node_modules/
+        }]
+    },
+
+    plugins: [
+        new HtmlWebpackPlugin({
+            inject: true,
+            template: "example/index.html",
+            favicon: "src/img/favicon.ico"
+        })
+    ],
+
+    devtool: 'eval',
+
+    devServer: {
+        contentBase: "./src",
+        host: "0.0.0.0"
+    },
+
+    externals: {
+        mithril: 'm'
     }
-});
-
-config.externals = {
-    mithril: 'm'
 };
-
-module.exports = config;
