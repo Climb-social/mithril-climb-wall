@@ -20,10 +20,10 @@ const m = require('mithril');
 
     climb.Wall = {
 
-        controller: function (climbId) {
+        controller: function (climbId, limit) {
             var feed = climb.Collection.feed(climbId);
             return {
-                feed
+                feed, limit
             }
 
         },
@@ -31,8 +31,10 @@ const m = require('mithril');
         view: function (ctrl) {
             "use strict";
             return m('div.climb__wall', [
-                ctrl.feed().map(function (item) {
-                    return m.component(climb.Tile, {item: item});
+                ctrl.feed().map(function (item, index) {
+                    if (index < ctrl.limit){
+                        return m.component(climb.Tile, {item: item});
+                    }
                 })
             ]);
         }
@@ -70,8 +72,9 @@ const m = require('mithril');
     for (let i = 0; i < $targets.length; ++i) {
         let $item = $targets[i];
         let climbId = $item.dataset.collectionId;
+        let limit = $item.dataset.limit;
         m.mount($targets[i], {
-            controller: climb.Wall.controller.bind(climb.Wall.controller, climbId),
+            controller: climb.Wall.controller.bind(climb.Wall.controller, climbId, limit),
             view: climb.Wall.view
         });
     }
