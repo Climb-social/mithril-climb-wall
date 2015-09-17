@@ -1,6 +1,6 @@
 {
   "name": "mithril-climb-wall",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Pop-up Climb.social wall via Mithril.js",
   "main": "src/index.js",
   "scripts": {
