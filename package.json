@@ -2,7 +2,7 @@
   "name": "mithril-climb-wall",
   "version": "0.0.1",
   "description": "Pop-up Climb.social wall via Mithril.js",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "start": "webpack-dev-server",
     "build": "webpack -p",
